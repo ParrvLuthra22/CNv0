@@ -12,22 +12,25 @@ if (!Number.isInteger(PORT) || PORT < 1 || PORT > 65535) {
 
 const server = http.createServer((req, res) => {
   res.setHeader('X-Backend', ID);
+  const method = req.method;
+  const isGetOrHead = method === 'GET' || method === 'HEAD';
+  const pathname = new URL(req.url, 'http://localhost').pathname;
 
-  if (req.method === 'GET' && req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(`Backend ${ID} is running`);
-  } else if (req.method === 'GET' && req.url === '/api/status') {
+  if (isGetOrHead && pathname === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(method === 'HEAD' ? undefined : `Backend ${ID} is running`);
+  } else if (isGetOrHead && pathname === '/api/status') {
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    res.end(JSON.stringify({ backend: ID, status: 'ok' }));
-  } else if (req.method === 'GET' && req.url === '/api/cached') {
+    res.end(method === 'HEAD' ? undefined : JSON.stringify({ backend: ID, status: 'ok' }));
+  } else if (isGetOrHead && pathname === '/api/cached') {
     res.writeHead(200, {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'public, max-age=60',
     });
-    res.end(JSON.stringify({ data: 'static-ish content' }));
+    res.end(method === 'HEAD' ? undefined : JSON.stringify({ data: 'static-ish content' }));
   } else {
     res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
-    res.end(JSON.stringify({ error: 'Not found' }));
+    res.end(method === 'HEAD' ? undefined : JSON.stringify({ error: 'Not found' }));
   }
 });
 
