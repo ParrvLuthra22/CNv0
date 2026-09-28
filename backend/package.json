@@ -1,0 +1,12 @@
+{
+  "name": "cn-project-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Task C REST backend for the Computer Networks project",
+  "main": "server.js",
+  "scripts": {
+    "start:a": "BACKEND_ID=A PORT=3001 node server.js",
+    "start:b": "BACKEND_ID=B PORT=3002 node server.js"
+  },
+  "dependencies": {}
+}
