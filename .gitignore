@@ -1,0 +1,4 @@
+*.key
+*.srl
+node_modules/
+.DS_Store
