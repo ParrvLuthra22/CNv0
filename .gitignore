@@ -1,4 +1,6 @@
 *.key
-*.srl
-node_modules/
+ca.key
+server.key
 .DS_Store
+node_modules/
+*.log
