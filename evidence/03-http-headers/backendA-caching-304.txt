@@ -1,0 +1,20 @@
+$ curl -sI http://127.0.0.1:3001/api/cached
+HTTP/1.1 200 OK
+X-Backend: A
+Content-Type: application/json; charset=utf-8
+Cache-Control: public, max-age=60
+ETag: "584ee035ef3eb70fedba56153d4207561c33a808d850676a9850d28d9581823d"
+Date: Wed, 30 Sep 2026 09:06:16 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+
+$ curl -sI http://127.0.0.1:3001/api/cached -H 'If-None-Match: "584ee035ef3eb70fedba56153d4207561c33a808d850676a9850d28d9581823d"'
+HTTP/1.1 304 Not Modified
+X-Backend: A
+Cache-Control: public, max-age=60
+ETag: "584ee035ef3eb70fedba56153d4207561c33a808d850676a9850d28d9581823d"
+Date: Wed, 30 Sep 2026 09:06:16 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
