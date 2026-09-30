@@ -1,7 +1,10 @@
 const http = require('node:http');
+const { createHash } = require('node:crypto');
 
 const ID = process.env.BACKEND_ID;
 const PORT = Number(process.env.PORT);
+const cachedBody = JSON.stringify({ data: 'static-ish content' });
+const cachedEtag = `"${createHash('sha256').update(cachedBody).digest('hex')}"`;
 
 if (!['A', 'B'].includes(ID)) {
   throw new Error('Set BACKEND_ID to A or B');
@@ -23,11 +26,26 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
     res.end(method === 'HEAD' ? undefined : JSON.stringify({ backend: ID, status: 'ok' }));
   } else if (isGetOrHead && pathname === '/api/cached') {
-    res.writeHead(200, {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=60',
+    const ifNoneMatch = req.headers['if-none-match'];
+    const etagMatches = ifNoneMatch && ifNoneMatch.split(',').some((candidate) => {
+      const tag = candidate.trim();
+      return tag === '*' || tag.replace(/^W\//, '') === cachedEtag;
     });
-    res.end(method === 'HEAD' ? undefined : JSON.stringify({ data: 'static-ish content' }));
+
+    if (etagMatches) {
+      res.writeHead(304, {
+        'Cache-Control': 'public, max-age=60',
+        ETag: cachedEtag,
+      });
+      res.end();
+    } else {
+      res.writeHead(200, {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'public, max-age=60',
+        ETag: cachedEtag,
+      });
+      res.end(method === 'HEAD' ? undefined : cachedBody);
+    }
   } else {
     res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
     res.end(method === 'HEAD' ? undefined : JSON.stringify({ error: 'Not found' }));
