@@ -4,3 +4,4 @@ server.key
 .DS_Store
 node_modules/
 *.log
+*.bak
