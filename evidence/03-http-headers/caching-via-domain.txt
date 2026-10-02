@@ -1,0 +1,9 @@
+$ curl -sI --cacert config/tls/ca.crt https://app.team1.test/api/cached
+HTTP/1.1 200 OK
+Cache-Control: public, max-age=60
+ETag: "584ee035ef3eb70fedba56153d4207561c33a808d850676a9850d28d9581823d"
+
+$ curl -sI --cacert config/tls/ca.crt https://app.team1.test/api/cached -H 'If-None-Match: "584ee035ef3eb70fedba56153d4207561c33a808d850676a9850d28d9581823d"'
+HTTP/1.1 304 Not Modified
+Cache-Control: public, max-age=60
+ETag: "584ee035ef3eb70fedba56153d4207561c33a808d850676a9850d28d9581823d"

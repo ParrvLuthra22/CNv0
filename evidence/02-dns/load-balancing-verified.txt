@@ -1,0 +1,5 @@
+$ for i in 1 2 3 4; do curl -s --cacert config/tls/ca.crt https://app.team1.test/api/status\; echo; done
+{"backend":"B","status":"ok"}
+{"backend":"A","status":"ok"}
+{"backend":"B","status":"ok"}
+{"backend":"A","status":"ok"}
