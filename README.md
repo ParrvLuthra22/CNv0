@@ -18,8 +18,9 @@ and failure diagnosis at the DNS/TCP/TLS/application layers.
 
 ## Architecture
 
+```
 Client → DNS query (Mac 1) → HTTPS request (Mac 2, nginx) → Backend A or B (Mac 3/4)
-
+```
 
 Domain: `app.team1.test` / `api.team1.test` — resolves via the team's own
 DNS server, terminates TLS at the edge, and load-balances across two
@@ -30,12 +31,13 @@ See [`docs/architecture.md`](docs/architecture.md) and
 
 ## Repository layout
 
-/docs architecture.md, topology.md, final-report.md
-/config dnsmasq/, nginx/, tls/ (ca.crt only, never keys), pf-rules/
-/backend server.js, package.json
-/evidence 01-lan/ 02-dns/ 03-http-headers/ 04-wireshark/ 06-failures/ 07-phase2/
-/scripts start/stop helpers
-
+```
+/docs      architecture.md, topology.md, final-report.md
+/config    dnsmasq/, nginx/, tls/ (ca.crt only, never keys), pf-rules/
+/backend   server.js, package.json
+/evidence  01-lan/ 02-dns/ 03-http-headers/ 04-wireshark/ 06-failures/ 07-phase2/
+/scripts   start/stop helpers
+```
 
 ## Status
 
