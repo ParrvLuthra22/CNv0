@@ -45,7 +45,7 @@
 | # | Owner | Role | IP address | MAC address | Port(s) |
 |---|---|---|---|---|---|
 | 1 | Malhar | DNS server | `10.7.5.152` | `TODO` | 53 |
-| 2 | Parrv | Edge / load balancer / TLS | `10.7.29.176` | `32:bc:3c:a1:05:eb` | 80, 443 |
+| 2 | Parrv | Edge / load balancer / TLS | `10.7.29.176` | `TODO` | 80, 443 |
 | 3 | Raghav | Backend Server A | `10.7.25.71` | `TODO` | 3001 |
 | 4 | Pushkar | Backend Server B | `10.7.11.57` | `TODO` | 3002 |
 
