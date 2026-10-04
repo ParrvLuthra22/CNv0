@@ -9,12 +9,16 @@ and failure diagnosis at the DNS/TCP/TLS/application layers.
 
 ## Team & roles
 
-| Machine | Owner | Role | Port(s) |
-|---|---|---|---|
-| Mac 1 | Malhar | Private DNS server (dnsmasq) | 53 |
-| Mac 2 | Parrv | Edge reverse proxy, load balancer, TLS termination (nginx) | 80, 443 |
-| Mac 3 | Raghav | Backend Server A | 3001 |
-| Mac 4 | Pushkar | Backend Server B | 3002 |
+| Machine | Owner | Role | IP | Port(s) |
+|---|---|---|---|---|
+| Mac 1 | Malhar | Private DNS server (dnsmasq) | 10.7.5.152 | 53 |
+| Mac 2 | Parrv | Edge reverse proxy, load balancer, TLS termination (nginx) | 10.7.29.176 | 80, 443 |
+| Mac 3 | Raghav | Backend Server A | 10.7.25.71 | 3001 |
+| Mac 4 | Pushkar | Backend Server B | 10.7.11.57 | 3002 |
+
+> IPs are DHCP-assigned and may change. Re-verify with `ipconfig getifaddr en0`
+> on each Mac before every demo session, and update the DNS records and
+> configs if anything has drifted.
 
 ## Architecture
 
@@ -43,9 +47,21 @@ See [`docs/architecture.md`](docs/architecture.md) and
 
 **Phase 1 (build & observe):** DNS, backends, load balancing, TLS, and
 HTTP caching all verified end-to-end through the real domain. Wireshark
-capture and failure demonstrations in progress.
+capture (DNS, TCP handshake, TLS SNI) and all five failure demonstrations
+are done. **Phase 1 is complete.**
 
 **Phase 2 (harden & recover):** not yet started.
+
+## Evidence index
+
+| Folder | Contents |
+|---|---|
+| [`evidence/01-lan/`](evidence/01-lan/) | LAN inventory: IP, subnet, gateway, MAC per machine |
+| [`evidence/02-dns/`](evidence/02-dns/) | DNS resolution and round-robin load-balancing verification |
+| [`evidence/03-http-headers/`](evidence/03-http-headers/) | HTTP status/headers and caching (ETag, 304) via backend and domain |
+| [`evidence/04-wireshark/`](evidence/04-wireshark/) | Wireshark screenshots: DNS query/response, TCP handshake, TLS Client Hello with SNI |
+| [`evidence/06-failures/`](evidence/06-failures/) | Failure demos: wrong DNS, DNS wrong IP, backend A down, both backends down, wrong port |
+| [`evidence/07-phase2/`](evidence/07-phase2/) | Phase 2 (harden & recover) evidence — empty for now |
 
 ## Running it
 

@@ -13,7 +13,7 @@
                 ┌──────────────────────────────┐
                 │  Mac 1 — Malhar                │
                 │  DNS server (dnsmasq)          │
-                │  IP: <MALHAR_IP>               │
+                │  IP: 10.7.5.152                │
                 │  Port: 53                      │
                 └───────────────┬────────────────┘
                                  │
@@ -24,7 +24,7 @@
                 │  Mac 2 — Parrv                 │
                 │  Edge: nginx (reverse proxy +  │
                 │  load balancer + TLS)          │
-                │  IP: <PARRV_IP>                │
+                │  IP: 10.7.29.176               │
                 │  Ports: 80 → redirect, 443 TLS │
                 └───────────────┬────────────────┘
                                  │
@@ -34,7 +34,7 @@
     ┌──────────────────────────┐  ┌──────────────────────────┐
     │  Mac 3 — Raghav           │  │  Mac 4 — Pushkar          │
     │  Backend Server A         │  │  Backend Server B         │
-    │  IP: <RAGHAV_IP>          │  │  IP: <PUSHKAR_IP>         │
+    │  IP: 10.7.25.71           │  │  IP: 10.7.11.57          │
     │  Port: 3001                │  │  Port: 3002                │
     └───────────────────────────┘  └───────────────────────────┘
 
@@ -44,10 +44,14 @@
 
 | # | Owner | Role | IP address | MAC address | Port(s) |
 |---|---|---|---|---|---|
-| 1 | Malhar | DNS server | `<MALHAR_IP>` | `<MALHAR_MAC>` | 53 |
-| 2 | Parrv | Edge / load balancer / TLS | `<PARRV_IP>` | `<PARRV_MAC>` | 80, 443 |
-| 3 | Raghav | Backend Server A | `<RAGHAV_IP>` | `<RAGHAV_MAC>` | 3001 |
-| 4 | Pushkar | Backend Server B | `<PUSHKAR_IP>` | `<PUSHKAR_MAC>` | 3002 |
+| 1 | Malhar | DNS server | `10.7.5.152` | `TODO` | 53 |
+| 2 | Parrv | Edge / load balancer / TLS | `10.7.29.176` | `32:bc:3c:a1:05:eb` | 80, 443 |
+| 3 | Raghav | Backend Server A | `10.7.25.71` | `TODO` | 3001 |
+| 4 | Pushkar | Backend Server B | `10.7.11.57` | `TODO` | 3002 |
+
+<!-- TODO: collect MACs from each teammate's own Mac with `ifconfig en0 | grep ether`
+     (Malhar, Raghav, Pushkar). Parrv's MAC taken from `ifconfig en0` on 2026-10-04;
+     Wi-Fi Private Address may rotate it per network. -->
 
 All four machines share the same LAN/hotspot subnet.
 
@@ -55,8 +59,8 @@ All four machines share the same LAN/hotspot subnet.
 
 | Hostname | Resolves to |
 |---|---|
-| `app.team1.test` | `<PARRV_IP>` |
-| `api.team1.test` | `<PARRV_IP>` |
+| `app.team1.test` | `10.7.29.176` |
+| `api.team1.test` | `10.7.29.176` |
 
 ## Connectivity confirmed
 
@@ -68,6 +72,6 @@ All four machines share the same LAN/hotspot subnet.
 
 ## Client DNS configuration
 
-Every machine's DNS resolver is set to `<MALHAR_IP>` (Network Settings →
+Every machine's DNS resolver is set to `10.7.5.152` (Network Settings →
 Wi-Fi → Details → DNS), so `app.team1.test` resolves without any manual
 `--resolve` override.
